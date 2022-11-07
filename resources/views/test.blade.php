@@ -87,8 +87,8 @@
                             
                             <li>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  name="respuesta" value="{{$op}}" class="custom-control-input">
-                                    <label class="custom-control-label">{{$op}}</label>
+                                    <input type="radio"  name="respuesta" value="{{$op['denominacion']}}" class="custom-control-input">
+                                    <label class="custom-control-label">{{$op['denominacion']}}</label>
                                   </div>
                             </li>
                         

@@ -72,7 +72,7 @@ class TestController extends Controller
         }
 
         $preguntas=$this->obtener_preguntas($datos['modulo'],$id);
-       //return $preguntas;
+        //return $preguntas;
         return view('test',['preguntas'=>$preguntas,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
     }
 
@@ -93,7 +93,11 @@ class TestController extends Controller
         if($prueba['numpregunta']==null || $prueba['denominacion']==null ){
             return [];
         }
+        $opciones=$this->obtener_opciones($modulo,$submodulo);
+        $opciones=$opciones['listar_examenpsicologicoopciones'];
+        
         foreach($preguntas['listar_examenpsicologicopreguntas'] as $pre){
+            $opcion =$this->buscar_opcione($pre['numpregunta'],$opciones);
             $pregu[]=[
                 'id'=>$pre['numpregunta'],
                 'pregunta'=>$pre['denominacion'],
@@ -101,15 +105,28 @@ class TestController extends Controller
                 'respuesta'=>$pre['respuesta'],
                 'descripcion'=>$pre['descripcion'],
                 'tipo'=>'opcion',
-                'opciones'=>[
+                'options'=>[
                     'Si',
                     'No',   
-                ]
+                ],
+                'opciones'=>$opcion,
             ];
         }
         return $pregu;
     }
-
+    public function buscar_opcione($preg,$opciones){
+        $option=[];
+        foreach($opciones as $op){
+            if($op['numpregunta']==$preg){
+                $option[]=[
+                    'id'=>$op['idopcion'],
+                    'denominacion'=>$op['denominacion'],
+                    'valor'=>$op['valor'],
+                ];
+            }
+        }
+        return $option;
+    }
     public function obtener_opciones($modulo,$submodulo){
         $params=[
             'op'=>'listar_examenpsicologicoopciones',
