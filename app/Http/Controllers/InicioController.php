@@ -10,6 +10,10 @@ class InicioController extends Controller
 {
     private $user;
     private $dni;
+    private $atencion;
+    private $establecimiento;
+    use traitservicio;
+    
     public function __construct(Request $request)
     {
        //$this->middleware('auth');
@@ -18,6 +22,8 @@ class InicioController extends Controller
         throw new Exception('error al autenticar');
        }else{
         $this->user=$request->session()->get('user');
+        $this->atencion=$request->session()->get('num_atencion');
+        $this->establecimiento=$request->session()->get('num_establecimiento');
         if(!$request->session()->has('dni')){
             Redirect::to('/')->send();
             throw new Exception('error al autenticar');
@@ -28,32 +34,35 @@ class InicioController extends Controller
     }
     
     public function inicio(Request $request){
-
-        $cuestionario=[
-            [
-                'nombre'=>'TEST DE EPWORT',
-                'preguntas'=>14,
-                'estado'=>0,
-                'tiempo'=>'10',
-                'id'=>1,
-            ],
-            [
-                'nombre'=>'TEST DE ZUNG',
-                'preguntas'=>18,
-                'estado'=>1,
-                'tiempo'=>'30',
-                'id'=>2,
-            ],
-            [
-                'nombre'=>'TEST DE AUDIT',
-                'preguntas'=>20,
-                'estado'=>0,
-                'tiempo'=>'25',
-                'id'=>3
-            ],
-            
-
+     
+        $params=[
+            'op'=>'listar_examenpsicologico',
+            'usuariows'=>'app',
+            'clavews'=>'fa0801',
+            'atencion'=>$this->atencion,
+            'establecimiento'=>$this->establecimiento, 
         ];
+        
+        $datos=$this->requestdata($params);
+        $prueba= $datos['listar_examenpsicologico'][0];
+        if($prueba['atencion']==null || $prueba['establecimiento']==null || $prueba['denominacion']==null){
+            throw new Exception('error al obtener los test');
+        }
+        $cuestionario=[];
+
+        foreach($datos['listar_examenpsicologico'] as $cuest){
+            $cuestionario[]=[
+                'nombre'=>$cuest['denominacion'],
+                'preguntas'=>14,
+                'estado'=>$cuest['estado']=='PENDIENTE'?0:1,
+                'id'=>$cuest['submodulo'],
+                'tiempo'=>$cuest['tiempo'],
+                'modulo'=>$cuest['modulo'],
+                'tipo'=>1,
+            ];
+        }
+       // return $cuestionario;
+  
         return view('inicio',['user'=>$request->session()->all(),'cuestionario'=>$cuestionario]);
 
     }

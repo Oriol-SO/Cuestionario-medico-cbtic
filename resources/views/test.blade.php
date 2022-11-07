@@ -72,6 +72,7 @@
       </div>
       <div class="more-info reservation-info" style="overflow: auto; max-height:700px;">
         <div class="container">
+          @if(count($preguntas)>0)
           <div class="row">
             <small style="color:transparent">{{$i=1}}</small>
             @foreach($preguntas as $pre)
@@ -125,6 +126,13 @@
                 </fieldset>
             </div>
           </div>
+          @else
+          <div class="row">
+            <div class="alert alert-warning" role="alert">
+              No hay preguntas en este test
+            </div>
+          </div>
+          @endif
         </div>
       </div>
 
