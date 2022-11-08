@@ -110,7 +110,7 @@
                             
                           </div>
                           <ul class="info">
-                            <!--li><i class="fa fa-question"></i> {{/*$cuest['preguntas']*/}} preguntas</li-->
+                            <!--li><i class="fa fa-question"></i> preguntas</li-->
                             <li><i class="fa fa-clock"></i> Duracion: {{$cuest['tiempo']}} minutos</li>                         
                           </ul>
                         </div>
