@@ -57,7 +57,7 @@
             <div class="col-lg-9 ">
               <div class="section-heading text-center " >
                 <h2>{{$test['nombre']}}</h2>
-                <p class="mb-3 pb-4">Responda las preguntas de la forma mas sincera posible.</p>
+                <p class="mb-3 pb-4">{{$desc}}</p>
               </div>
             </div>
             <div class="col-lg-2 ">
@@ -87,7 +87,7 @@
                             
                             <li>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  name="respuesta" value="{{$op['denominacion']}}" class="custom-control-input">
+                                    <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['denominacion']}}" class="custom-control-input" onchange="enviar({{$pre['id']}},{{$op['denominacion']}})">
                                     <label class="custom-control-label">{{$op['denominacion']}}</label>
                                   </div>
                             </li>
@@ -98,7 +98,7 @@
                     </div>
                 @else
                     <div>
-                        <input type="email" class="form-control" name="respuesta"  placeholder="Escriba su respuesta">
+                        <input type="text" class="form-control" name="respuesta"  placeholder="Escriba su respuesta">
                     </div>
                 @endif
                 
@@ -122,7 +122,7 @@
                     letter-spacing: 0.5px;
                     transition: all .3s;
                     position: relative;
-                    overflow: hidden;" class="main-button">Finalizar</button>
+                    overflow: hidden;" onclick="enviar_form()" class="main-button">Finalizar</button>
                 </fieldset>
             </div>
           </div>
@@ -137,5 +137,9 @@
       </div>
 
     @stop
+
+  <script>
+
+  </script>
 </body>
 </html>

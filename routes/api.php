@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CuestionarioController;
+use App\Http\Controllers\TestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('/cerrarsession',[CuestionarioController::class,'logout'])->name('logout');
 
+    Route::post('enviarrespuestas',[TestController::class,'enviar_resuestas']);

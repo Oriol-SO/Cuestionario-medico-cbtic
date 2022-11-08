@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Return_;
 
@@ -34,6 +35,33 @@ class TestController extends Controller
        }
     }
     
+    protected function enviar_resuestas(Request $request){
+        $request->validate([
+            'preguntas'=>'required',
+        ]);
+        try{
+            json_encode($request);
+            $array=[];
+            foreach($request->preguntas as $pre){
+                if($pre['pregunta']=='' || $pre['respuesta']=='' || $pre['pregunta']==null || $pre['respuesta']==null){
+                    return response()->json(['message'=>'Error al verificar respuestas'],405);
+                }
+                else{
+                    $array[]=[
+                        'atencion'=>$this->atencion,
+                        'establecimiento'=>$this->establecimiento,
+                        'pregunta'=>$pre['pregunta'],
+                        'respuesta'=>$pre['respuesta'],
+                    ];
+                }
+            }
+           return response()->json(['message'=>'enviado','preguntas'=>$array]);
+        }catch(Exception $e){
+            response()->json(['message'=>'Error en el servidor'],405);
+        }
+      
+    }
+
     public function test(Request $request,$id){
         
 
@@ -70,10 +98,17 @@ class TestController extends Controller
         if($datos['atencion']!=$this->atencion || $datos['establecimiento']!=$this->establecimiento){
             throw new Exception('La atencion no coincide');
         }
-
+        $descripcion='Resuelva el test correctamente';
         $preguntas=$this->obtener_preguntas($datos['modulo'],$id);
+        if(count($preguntas)>0){
+            $des=$preguntas[0]['descripcion'];
+            if($des!=''){
+                $descripcion=$des;
+            }
+        }
+        
         //return $preguntas;
-        return view('test',['preguntas'=>$preguntas,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
+        return view('test',['preguntas'=>$preguntas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
     }
 
 
@@ -143,5 +178,3 @@ class TestController extends Controller
         return $opciones;
     }
 }
-
-
