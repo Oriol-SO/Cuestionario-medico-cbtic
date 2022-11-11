@@ -63,7 +63,11 @@
             <div class="col-lg-2 ">
                 <div class=" text-center " >
                     <p>Duracion</p>
+                  @if($test['tiempo']>0)
                   <h5><i class="fa fa-clock"></i> {{$test['tiempo']}} min</h5>
+                  @else
+                  <h5><i class="fa fa-clock"></i> Indefinido</h5>
+                  @endif
                 </div>
               </div>
           </div>
@@ -79,7 +83,7 @@
             <div class="col-lg-12 mt-3">
               <div class="info-item">
                 <h4>( {{$i++}} ): {{$pre['pregunta']}}</h4>
-                @if($pre['tipo']=='opcion')
+                @if($pre['tipo']=='O')
                     <div>
                         <ul>
                             <form >
@@ -87,7 +91,7 @@
                             
                             <li>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['denominacion']}}" class="custom-control-input" onchange="enviar({{$pre['id']}},{{$op['denominacion']}})">
+                                    <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['id']}}" @if($op['denominacion']==$pre['respuesta']) checked @endif class="custom-control-input" onchange="enviar({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},{{$op['denominacion']}})">
                                     <label class="custom-control-label">{{$op['denominacion']}}</label>
                                   </div>
                             </li>
@@ -96,9 +100,9 @@
                         </form>
                         </ul>
                     </div>
-                @else
+                @elseif($pre['tipo']=='T')
                     <div>
-                        <input type="text" class="form-control" name="respuesta"  placeholder="Escriba su respuesta">
+                        <input type="text" class="form-control" name="respuesta"  placeholder="Escriba su respuesta" onchange="enviar_observacion({{$pre['id']}},{{$test['id']}},{{$test['modulo']}})">
                     </div>
                 @endif
                 
@@ -106,6 +110,7 @@
             </div>
             @endforeach
             <div>
+              @if($test['tiempo']>0)
                 <fieldset>
                     <button class="mt-2 mb-3" style="    
                     font-size: 14px;
@@ -124,6 +129,7 @@
                     position: relative;
                     overflow: hidden;" onclick="enviar_form()" class="main-button">Finalizar</button>
                 </fieldset>
+              @endif
             </div>
           </div>
           @else

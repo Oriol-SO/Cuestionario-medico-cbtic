@@ -111,7 +111,11 @@
                           </div>
                           <ul class="info">
                             <!--li><i class="fa fa-question"></i> preguntas</li-->
-                            <li><i class="fa fa-clock"></i> Duracion: {{$cuest['tiempo']}} minutos</li>                         
+                            @if($cuest['tiempo']>0)
+                            <li><i class="fa fa-clock"></i> Duracion: {{$cuest['tiempo']}} minutos</li>   
+                            @else
+                            <li><i class="fa fa-clock"></i> Duracion: Indefinido</li>
+                            @endif
                           </ul>
                         </div>
                       </div>

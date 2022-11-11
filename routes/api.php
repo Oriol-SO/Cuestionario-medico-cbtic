@@ -23,3 +23,4 @@ use Illuminate\Support\Facades\Route;
     Route::get('/cerrarsession',[CuestionarioController::class,'logout'])->name('logout');
 
     Route::post('enviarrespuestas',[TestController::class,'enviar_resuestas']);
+    Route::post('enviarrespuesta_pregu',[TestController::class,'enviar_resultado']);

@@ -35,6 +35,38 @@ class TestController extends Controller
        }
     }
     
+    protected function enviar_resultado(Request $request){
+        $request->validate([
+            'pregunta'=>'required|numeric',
+            'respuesta'=>'required',
+            'modulo'=>'required|numeric',
+            'submodulo'=>'required|numeric',
+            'tipo'=>'required'
+        ]);
+        $result=$request->respuesta;
+        $observacion='';
+        if($request->tipo==2){
+            $observacion='hola';
+            $result='';
+        }
+        $array=[
+            'op'=>'editar_pregunta',
+            'usuariows'=>'app',
+            'clavews'=>'fa0801',
+            'atencion'=>"$this->atencion",
+            'establecimiento'=>"$this->establecimiento",
+            'pregunta'=>"$request->pregunta",
+            'resultado'=>"$result",
+            'observacion'=>$observacion,
+            'modulo'=>"$request->modulo",
+            'submodulo'=>"$request->submodulo",    
+        ];
+        //dd($array);
+        $response=$this->requestdata($array);
+        return $response;
+    }
+
+
     protected function enviar_resuestas(Request $request){
         $request->validate([
             'preguntas'=>'required',
@@ -62,6 +94,8 @@ class TestController extends Controller
       
     }
 
+
+    
     public function test(Request $request,$id){
         
 
@@ -139,11 +173,7 @@ class TestController extends Controller
                 'numopcion'=>$pre['numopcion'],
                 'respuesta'=>$pre['respuesta'],
                 'descripcion'=>$pre['descripcion'],
-                'tipo'=>'opcion',
-                'options'=>[
-                    'Si',
-                    'No',   
-                ],
+                'tipo'=>$pre['tipo_respuesta'],
                 'opciones'=>$opcion,
             ];
         }

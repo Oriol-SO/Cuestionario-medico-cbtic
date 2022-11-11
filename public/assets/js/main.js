@@ -24,11 +24,39 @@ function validardni(){
 }
 
 var form_respuesta=[];
-function enviar(p,o){
-    console.log(p+' '+o)
-
-    rellenar_form(p,o)
+function enviar(p,s,m,o){
+    /*
+    p=pregunta
+    s=submodulo
+    m=modulo
+    o=respuesta
+    */
+    console.log(p+' '+o+' '+s+' '+m)
+    enviar_respuestas(p,o,m,s);
+    //rellenar_form(p,o)
 }
+
+function enviar_respuestas(p,o,m,s){
+    let form={
+        _csrf:window.CSRF_TOKEN,
+        pregunta:p,
+        respuesta:o,
+        modulo:m,
+        submodulo:s,
+        tipo:1,
+    }
+    axios.post('/api/enviarrespuesta_pregu', form).then(function (response) {
+        if(response.status==200 || response.status==201){
+            console.log(response.data)
+        }else{
+            Swal.fire({icon: 'error',text:'Algo salió mal'})
+        }      
+    })
+    .catch(function (error) {
+         Swal.fire({icon: 'error',text:error.response.data.message})
+    }); 
+}
+
 function rellenar_form(p,o){
     
     b=0;
@@ -55,6 +83,7 @@ function rellenar_form(p,o){
 
 
 function enviar_form(){
+    return   
     if(form_respuesta){
         form_respuesta.sort(function (a, b){
             return (a.pregunta - b.pregunta)
@@ -62,14 +91,14 @@ function enviar_form(){
         console.table(
          form_respuesta
         )
-        enviar_respuestas(form_respuesta)
+        enviar_respuestas_conjunto(form_respuesta)
     }else{
         Swal.fire({icon: 'error',text:'Responda al menos una pregunta'})
     }
     
 }
 
-function enviar_respuestas(request){
+function enviar_respuestas_conjunto(request){
         let form={
             _csrf:window.CSRF_TOKEN,
             preguntas:request,
