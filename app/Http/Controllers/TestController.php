@@ -38,16 +38,24 @@ class TestController extends Controller
     protected function enviar_resultado(Request $request){
         $request->validate([
             'pregunta'=>'required|numeric',
-            'respuesta'=>'required',
             'modulo'=>'required|numeric',
             'submodulo'=>'required|numeric',
-            'tipo'=>'required'
+            'tipo'=>'required',
+            'respuesta'=>'required_if:tipo,==,1',
+            'observacion'=>'required_if:tipo,==,2'
         ]);
         $result=$request->respuesta;
-        $observacion='';
+        $observacion=$request->observacion;
         if($request->tipo==2){
-            $observacion='hola';
+            $observacion=$request->observacion;
             $result='';
+        }
+        if($request->tipo==3){
+            if($request->respuesta=='' && $request->observacion==''){
+                return response()->json(['message'=>'Los campos estan vacios'],405);
+            }
+            $observacion=$request->observacion;
+            $result=$request->respuesta;
         }
         $array=[
             'op'=>'editar_pregunta',
@@ -57,7 +65,7 @@ class TestController extends Controller
             'establecimiento'=>"$this->establecimiento",
             'pregunta'=>"$request->pregunta",
             'resultado'=>"$result",
-            'observacion'=>$observacion,
+            'observacion'=>"$observacion",
             'modulo'=>"$request->modulo",
             'submodulo'=>"$request->submodulo",    
         ];
@@ -174,6 +182,7 @@ class TestController extends Controller
                 'respuesta'=>$pre['respuesta'],
                 'descripcion'=>$pre['descripcion'],
                 'tipo'=>$pre['tipo_respuesta'],
+                'observacion'=>$pre['observacion'],
                 'opciones'=>$opcion,
             ];
         }

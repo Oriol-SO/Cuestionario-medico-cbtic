@@ -85,13 +85,14 @@
                 <h4>( {{$i++}} ): {{$pre['pregunta']}}</h4>
                 @if($pre['tipo']=='O')
                     <div>
+                      @if(count($pre['opciones'])>0)
                         <ul>
                             <form >
                             @foreach($pre['opciones'] as $op)
                             
                             <li>
                                 <div class="custom-control custom-radio">
-                                    <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['id']}}" @if($op['denominacion']==$pre['respuesta']) checked @endif class="custom-control-input" onchange="enviar({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},{{$op['denominacion']}})">
+                                    <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['id']}}" @if($op['denominacion']==$pre['respuesta']) checked @endif class="custom-control-input" onchange="enviar({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},'{{$op['denominacion']}}',1)">
                                     <label class="custom-control-label">{{$op['denominacion']}}</label>
                                   </div>
                             </li>
@@ -99,11 +100,40 @@
                             @endforeach
                         </form>
                         </ul>
+                        @endif
                     </div>
                 @elseif($pre['tipo']=='T')
                     <div>
-                        <input type="text" class="form-control" name="respuesta"  placeholder="Escriba su respuesta" onchange="enviar_observacion({{$pre['id']}},{{$test['id']}},{{$test['modulo']}})">
+                        <input type="text" class="form-control" name="respuesta" value="{{$pre['observacion']}}"  placeholder="Escriba su respuesta" onchange="enviar_observacion({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},this)">
                     </div>
+                @elseif($pre['tipo']=='A')
+                <form>
+                    <div>
+                      @if(count($pre['opciones'])>0)
+                      <ul>
+                         
+                          @foreach($pre['opciones'] as $op)
+                          
+                          <li>
+                              <div class="custom-control custom-radio">
+                                  <input type="radio"  name="respuesta" preg="{{$pre['id']}}" value="{{$op['id']}}" @if($op['denominacion']==$pre['respuesta']) checked @endif class="custom-control-input" 
+                                  onchange="enviar_opcion_con_re({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},'{{$op['denominacion']}}','{{$pre['observacion']}}')">
+                                  <label class="custom-control-label">{{$op['denominacion']}}</label>
+                              </div>
+                          </li>
+                      
+                          @endforeach
+                      
+                      </ul>
+                      
+                      @endif
+                    </div>
+                    <div>
+                      <input type="text" class="form-control" name="respuesta" value="{{$pre['observacion']}}"  placeholder="Escribe tu respuesta" 
+                      onchange="enviar_observacion_con_re({{$pre['id']}},{{$test['id']}},{{$test['modulo']}},this,'{{$pre['respuesta']}}')">
+                    </div>
+                    
+                </form>
                 @endif
                 
               </div>
