@@ -141,7 +141,7 @@ function enviar_respuestas(p,o,m,s,tipo){
 
 
 
-function enviar_ambos_resultado(p,m,s){
+function enviar_ambos_resultado(p,s,m){
     let form={
         _csrf:window.CSRF_TOKEN,
         pregunta:p,
