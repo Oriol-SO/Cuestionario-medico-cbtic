@@ -2342,3 +2342,8 @@ body {
     margin-top: 60px;
   }
 }
+
+.btn_inicio_hover{
+  background-color: #22b3c1;
+  color: #fff;
+}

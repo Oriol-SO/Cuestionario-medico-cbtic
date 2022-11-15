@@ -106,7 +106,9 @@ class TestController extends Controller
     
     public function test(Request $request,$id){
         
+        try{
 
+        
         $params=[
             'op'=>'listar_examenpsicologico',
             'usuariows'=>'app',
@@ -151,6 +153,9 @@ class TestController extends Controller
         
         //return $preguntas;
         return view('test',['preguntas'=>$preguntas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
+        }catch(Exception $e){
+            throw new Exception('ERROR');
+        }
     }
 
 

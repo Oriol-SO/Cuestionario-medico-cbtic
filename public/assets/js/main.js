@@ -1,7 +1,8 @@
 
 var form=document.getElementById('formulariodni')
 
-
+var btn_enviar=document.getElementById('btn_enviar')
+var loader_box=document.getElementById('loader')
 
 var datodni=''
 
@@ -10,17 +11,27 @@ form.addEventListener('submit',e=>{
     datodni = Object.fromEntries(new FormData(e.target));
     console.log(JSON.stringify(datodni))
     validardni();
+    btn_enviar.disabled=true;
+    btn_enviar.classList.add('btn_inicio_hover');
+    loader_box.innerHTML="<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Cargando" 
 })
      
 function validardni(){ 
     axios.post('/api/obtenerdatos',datodni).then(function (response) {
         window.location.href = '/inicio';
         console.log(response.data);
+        loader_box.innerHTML='Enviar'  
+        btn_enviar.disabled=false;
+        btn_enviar.classList.remove('btn_inicio_hover');
         })
         .catch(function (error) {
         Swal.fire({icon: 'error',text:error.response.data.message})
         console.log(error.response.data.message);
+        loader_box.innerHTML='Enviar'  
+        btn_enviar.disabled=false; 
+        btn_enviar.classList.remove('btn_inicio_hover');      
         });      
+      
 }
 
 var form_respuesta=[];

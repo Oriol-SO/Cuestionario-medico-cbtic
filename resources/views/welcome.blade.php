@@ -61,7 +61,9 @@
                               </div>
 
                               <div class="border-button">
-                                <input type="submit" value="Enviar"  class="enviar">
+                                <button type="submit"  class="enviar" id="btn_enviar" >
+                                    <div id='loader'>Enviar </div>
+                                </button>
                               </div>
                             </div>
                           </form>
