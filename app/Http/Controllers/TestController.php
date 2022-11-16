@@ -36,42 +36,46 @@ class TestController extends Controller
     }
     
     protected function enviar_resultado(Request $request){
-        $request->validate([
-            'pregunta'=>'required|numeric',
-            'modulo'=>'required|numeric',
-            'submodulo'=>'required|numeric',
-            'tipo'=>'required',
-            'respuesta'=>'required_if:tipo,==,1',
-            'observacion'=>'required_if:tipo,==,2'
-        ]);
-        $result=$request->respuesta;
-        $observacion=$request->observacion;
-        if($request->tipo==2){
-            $observacion=$request->observacion;
-            $result='';
-        }
-        if($request->tipo==3){
-            if($request->respuesta=='' && $request->observacion==''){
-                return response()->json(['message'=>'Los campos estan vacios'],405);
-            }
-            $observacion=$request->observacion;
+        try{
+            $request->validate([
+                'pregunta'=>'required|numeric',
+                'modulo'=>'required|numeric',
+                'submodulo'=>'required|numeric',
+                'tipo'=>'required',
+                'respuesta'=>'required_if:tipo,==,1',
+                'observacion'=>'required_if:tipo,==,2'
+            ]);
             $result=$request->respuesta;
+            $observacion=$request->observacion;
+            if($request->tipo==2){
+                $observacion=$request->observacion;
+                $result='';
+            }
+            if($request->tipo==3){
+                if($request->respuesta=='' && $request->observacion==''){
+                    return response()->json(['message'=>'Los campos estan vacios'],405);
+                }
+                $observacion=$request->observacion;
+                $result=$request->respuesta;
+            }
+            $array=[
+                'op'=>'editar_pregunta',
+                'usuariows'=>'app',
+                'clavews'=>'fa0801',
+                'atencion'=>"$this->atencion",
+                'establecimiento'=>"$this->establecimiento",
+                'pregunta'=>"$request->pregunta",
+                'resultado'=>"$result",
+                'observacion'=>"$observacion",
+                'modulo'=>"$request->modulo",
+                'submodulo'=>"$request->submodulo",    
+            ];
+            //dd($array);
+            $response=$this->requestdata($array);
+            return $response;
+        }catch(Exception $e){
+            return response()->json(['message'=>'Error al enviar respuesta'],405);
         }
-        $array=[
-            'op'=>'editar_pregunta',
-            'usuariows'=>'app',
-            'clavews'=>'fa0801',
-            'atencion'=>"$this->atencion",
-            'establecimiento'=>"$this->establecimiento",
-            'pregunta'=>"$request->pregunta",
-            'resultado'=>"$result",
-            'observacion'=>"$observacion",
-            'modulo'=>"$request->modulo",
-            'submodulo'=>"$request->submodulo",    
-        ];
-        //dd($array);
-        $response=$this->requestdata($array);
-        return $response;
     }
 
 
