@@ -205,7 +205,7 @@ section {
   position: relative;
   z-index: 2;
   margin-top: 0px;
-  margin-bottom: 80px;
+  /*margin-bottom: 80px;*/
   text-align: left;
 }
 
@@ -2085,7 +2085,7 @@ Reservation Page Style
 }
 
 .reservation-info {
-  margin-top: -99px;
+ /* margin-top: -99px;*/
 }
 
 .more-info .info-item {

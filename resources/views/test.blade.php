@@ -53,23 +53,64 @@
                 <div class=" text-center " >
                     <a class="btn btn-primary" href="{{url('/inicio')}}" role="button">Atras</a>
                 </div>
+            </div>
+            
+              <div class="col-lg-1 ">
+                @if($test['tiempo']>0)
+                <div class=" text-center " >
+                    <p>Tiempo</p>
+                    @if($test['tiempo']>0)
+                    <h5><i class="fa fa-clock"></i> {{$test['tiempo']}} min</h5>
+                    @else
+                    <h5><i class="fa fa-clock"></i> Indefinido</h5>
+                    @endif
+                </div>
+                @endif
               </div>
-            <div class="col-lg-9 ">
+            
+
+            <div class="col-lg-8 ">
               <div class="section-heading text-center " >
                 <h2>{{$test['nombre']}}</h2>
-                <p class="mb-3 pb-4">{{$desc}}</p>
+                <p >{{$desc}}</p>
               </div>
             </div>
-            <div class="col-lg-2 ">
-                <div class=" text-center " >
-                    <p>Duracion</p>
-                  @if($test['tiempo']>0)
-                  <h5><i class="fa fa-clock"></i> {{$test['tiempo']}} min</h5>
-                  @else
-                  <h5><i class="fa fa-clock"></i> Indefinido</h5>
-                  @endif
+          </div>
+          <div class="row">
+            <div class="col-lg-12 ">
+              <div class="section-heading text-center " >
+                <div style="display: flex; justify-content:center;">
+                  <div style="display: flex;">
+                    <div class="card mx-4">
+                      <div class="card-body p-0">
+                        <div class="d-flex justify-content-between px-md-1">
+                          <div class="align-self-center">
+                            <i class="fas fa-question-circle text-warning fa-2x"></i>
+                          </div>
+                          <div class="text-end">
+                            <h3>{{$num_preg}}</h3>
+                            <p class="mb-0">Total de preguntas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card mx-4">
+                      <div class="card-body p-0">
+                        <div class="d-flex justify-content-between px-md-1">
+                          <div class="align-self-center">
+                            <i class="fas fa fa-check-circle text-success fa-2x"></i>
+                          </div>
+                          <div class="text-end">
+                            <h3>{{$num_res}}</h3>
+                            <p class="mb-0">Preguntas resueltas</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
        

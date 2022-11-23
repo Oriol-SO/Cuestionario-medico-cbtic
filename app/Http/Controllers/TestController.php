@@ -154,9 +154,16 @@ class TestController extends Controller
                 $descripcion=$des;
             }
         }
+        $num_preguntas=count($preguntas);
+        $num_respuestas=0;
+        foreach($preguntas as $pre){
+            if($pre['respuesta']!='' || $pre['observacion']!=''){
+                $num_respuestas++;
+            }
+        }
         
         //return $preguntas;
-        return view('test',['preguntas'=>$preguntas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
+        return view('test',['preguntas'=>$preguntas,'num_preg'=>$num_preguntas,'num_res'=>$num_respuestas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
         }catch(Exception $e){
             throw new Exception('ERROR');
         }
