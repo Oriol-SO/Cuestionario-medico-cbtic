@@ -51,9 +51,12 @@ class InicioController extends Controller
         $cuestionario=[];
 
         foreach($datos['listar_examenpsicologico'] as $cuest){
+            $total=$cuest['total_preguntas'];
+            $res=$cuest['preguntas_completadas'];
             $cuestionario[]=[
                 'nombre'=>$cuest['denominacion'],
-                'preguntas'=>14,
+                'preguntas'=>$cuest['total_preguntas'],
+                'avance'=>round(($res*100)/$total),
                 'estado'=>$cuest['estado']=='PENDIENTE'?0:1,
                 'id'=>$cuest['submodulo'],
                 'tiempo'=>$cuest['tiempo'],

@@ -28,10 +28,8 @@
     
     <script src="{!! asset('assets/js/isotope.min.js') !!}" type="text/javascript"></script>
     <script src="{!! asset('assets/js/owl-carousel.js') !!}" type="text/javascript"></script>
-    <script src="{!! asset('assets/js/wow.js') !!}" type="text/javascript"></script>
     <script src="{!! asset('assets/js/tabs.js') !!}" type="text/javascript"></script>
     <script src="{!! asset('assets/js/popup.js') !!}" type="text/javascript"></script>
-    <script src="{!! asset('assets/js/custom.js') !!}" type="text/javascript"></script>
     <script src="{!! asset('assets/js/custom.js') !!}" type="text/javascript"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" type="text/javascript"></script>

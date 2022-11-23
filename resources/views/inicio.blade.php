@@ -101,20 +101,28 @@
                       <div class="col-lg-8 col-sm-7">
                         <div class="right-content">
                           <h4>{{$cuest['nombre']}}</h4>
-                          <div class="main-button">
-                            @if($cuest['estado']==1)
-                            <a href="#" style="background-color: rgb(98, 234, 98);border:none;">Realizado</a>
-                            @else
-                            <a href="/test/{{$cuest['id']}}">Realizar</a> 
-                            @endif
-                            
-                          </div>
+                            <div>
+                             
+                              <div class="main-button" > 
+                                    
+                                @if($cuest['avance']==100)
+                                <a href="#" style="background-color: rgb(98, 234, 98);border:none;">Realizado</a>
+                                @else
+                                <a href="/test/{{$cuest['id']}}">Realizar</a> 
+                                @endif  
+                              </div>
+                            </div>
+             
                           <ul class="info">
-                            <!--li><i class="fa fa-question"></i> preguntas</li-->
+                            <li><i class="fa fa-question"></i> preguntas: {{$cuest['preguntas']}}</li>
                             @if($cuest['tiempo']>0)
-                            <li><i class="fa fa-clock"></i> Duracion: {{$cuest['tiempo']}} minutos</li>   
+                            <li><i class="fa fa-clock"></i> Tiempo: {{$cuest['tiempo']}} minutos</li>   
                             @else
-                            <li><i class="fa fa-clock"></i> Duracion: Indefinido</li>
+                            <li><i class="fa fa-clock"></i> Tiempo: Indefinido</li>
+                            <li> <div style="float: right">Estado</div> </li>
+                            <li>
+                              <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--value:{{$cuest['avance']}}"></div>
+                            </li>
                             @endif
                           </ul>
                         </div>
