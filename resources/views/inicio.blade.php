@@ -106,7 +106,7 @@
                               <div class="main-button" > 
                                     
                                 @if($cuest['avance']==100)
-                                <a href="#" style="background-color: rgb(98, 234, 98);border:none;">Realizado</a>
+                                <a href="/test/{{$cuest['id']}}" style="background-color: rgb(98, 234, 98);border:none;">Realizado</a>
                                 @else
                                 <a href="/test/{{$cuest['id']}}">Realizar</a> 
                                 @endif  
