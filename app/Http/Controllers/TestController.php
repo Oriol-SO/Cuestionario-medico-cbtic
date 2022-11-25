@@ -188,11 +188,13 @@ class TestController extends Controller
         $opciones=$opciones['listar_examenpsicologicoopciones'];
         $grup=0;
         $grupnom=false;
+        $num=0;
         foreach($preguntas['listar_examenpsicologicopreguntas'] as $pre){
             $opcion =$this->buscar_opcione($pre['numpregunta'],$opciones);
            if($pre['grupo_id']!=$grup){
               $grupnom=true;
               $grup=$pre['grupo_id'];
+              $num++;
            }else{
               $grupnom=false;
            }
@@ -207,6 +209,7 @@ class TestController extends Controller
                 'opciones'=>$opcion,
                 'grupo_id'=>$pre['grupo_id'],
                 'nombre_grupo'=>$grupnom?$pre['grupo_nombre']:'',
+                'grupo_vacio'=>'Grupo '.$num,
             ];
         }
         return $pregu;//$pre['grupo_nombre']

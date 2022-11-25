@@ -116,11 +116,13 @@
         <div class="container">
           @if(count($preguntas)>0)
           <div class="row">
-            <small style="color:transparent">{{$i=1}}</small>
+            <small style="color:transparent">{{$i=1}}{{$num=1}}</small>
             @foreach($preguntas as $pre)
             <div class="col-lg-12 mt-3">
-              @if($pre['grupo_id']!=0 && $pre['nombre_grupo']!='')
-                  <h5 style="color:#065db7;">{{$pre['nombre_grupo']}}</h5> <br>
+              @if($pre['grupo_id']!=0 )
+                  @if($pre['nombre_grupo']!='')
+                  <h5 style="color:#065db7;" >{{$pre['grupo_vacio']}}: {{$pre['nombre_grupo']}}</h5> <br>
+                  @endif
               @endif
               <div class="info-item">
                 <h4>( {{$i++}} ): {{$pre['pregunta']}}</h4>
