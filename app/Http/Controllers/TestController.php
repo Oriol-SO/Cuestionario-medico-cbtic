@@ -111,8 +111,6 @@ class TestController extends Controller
     public function test(Request $request,$id){
         
         try{
-
-        
         $params=[
             'op'=>'listar_examenpsicologico',
             'usuariows'=>'app',
@@ -162,7 +160,7 @@ class TestController extends Controller
             }
         }
         
-        //return $preguntas;
+       // return $preguntas;
         return view('test',['preguntas'=>$preguntas,'num_preg'=>$num_preguntas,'num_res'=>$num_respuestas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
         }catch(Exception $e){
             throw new Exception('ERROR');
@@ -188,9 +186,16 @@ class TestController extends Controller
         }
         $opciones=$this->obtener_opciones($modulo,$submodulo);
         $opciones=$opciones['listar_examenpsicologicoopciones'];
-        
+        $grup=0;
+        $grupnom=false;
         foreach($preguntas['listar_examenpsicologicopreguntas'] as $pre){
             $opcion =$this->buscar_opcione($pre['numpregunta'],$opciones);
+           if($pre['grupo_id']!=$grup){
+              $grupnom=true;
+              $grup=$pre['grupo_id'];
+           }else{
+              $grupnom=false;
+           }
             $pregu[]=[
                 'id'=>$pre['numpregunta'],
                 'pregunta'=>$pre['denominacion'],
@@ -200,9 +205,11 @@ class TestController extends Controller
                 'tipo'=>$pre['tipo_respuesta'],
                 'observacion'=>$pre['observacion'],
                 'opciones'=>$opcion,
+                'grupo_id'=>$pre['grupo_id'],
+                'nombre_grupo'=>$grupnom?$pre['grupo_nombre']:'',
             ];
         }
-        return $pregu;
+        return $pregu;//$pre['grupo_nombre']
     }
     public function buscar_opcione($preg,$opciones){
         $option=[];

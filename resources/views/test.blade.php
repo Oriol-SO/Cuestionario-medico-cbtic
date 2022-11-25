@@ -28,15 +28,12 @@
                         <!-- ***** Logo Start ***** -->
                         <a href="{{url('/inicio')}}" class="logo">
                             <img src="{!! asset('assets/images/logo.png')!!}" alt="">
-                    
                         </a>
-                        
                         <ul class="nav">
                             <li>
-                                <a href="{{url('/')}}">Terminar sesión</a> 
+                              <a href="{{url('/')}}">Terminar sesión</a> 
                             </li> 
                         </ul>
-
                         <a class="menu-trigger">
                             <span>Menu</span>
                         </a>
@@ -45,7 +42,6 @@
             </div>
         </div>
     </header>
-
     <div class="amazing-deals">
         <div class="container">
           <div class="row">
@@ -72,7 +68,7 @@
             <div class="col-lg-8 ">
               <div class="section-heading text-center " >
                 <h2>{{$test['nombre']}}</h2>
-                <p >{{$desc}}</p>
+               
               </div>
             </div>
           </div>
@@ -110,6 +106,7 @@
                   </div>
                 </div>
               </div>
+              <p style="color: black; text-align: center;" >{{$desc}}</p>
             </div>
           </div>
         </div>
@@ -122,6 +119,9 @@
             <small style="color:transparent">{{$i=1}}</small>
             @foreach($preguntas as $pre)
             <div class="col-lg-12 mt-3">
+              @if($pre['grupo_id']!=0 && $pre['nombre_grupo']!='')
+                  <h5 style="color:#065db7;">{{$pre['nombre_grupo']}}</h5> <br>
+              @endif
               <div class="info-item">
                 <h4>( {{$i++}} ): {{$pre['pregunta']}}</h4>
                 @if($pre['tipo']=='O')
@@ -176,7 +176,6 @@
                     
                 </form>
                 @endif
-                
               </div>
             </div>
             @endforeach
