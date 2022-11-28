@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('cuestionario/{token}',[CuestionarioController::class,'datos_link']);
 
 
-    Route::get('generaurl/{dni}',function ($dni) {
+    Route::get('generaurl/{dni}',function ($dni,Request $request) {
        /* $result = '';
         $key='test';
         for($i=0; $i<strlen($string); $i++) {
@@ -37,8 +37,9 @@ use Illuminate\Support\Facades\Route;
            $char = chr(ord($char)+ord($keychar));
            $result.=$char;
         }*/
+        $ruta= $request->root();
         $link= base64_encode($dni);
-        return 'localhost:8000/api/cuestionario/'.$link;
+        return $ruta.'/api/cuestionario/'.$link;
      });
   /*
      Route::get('cuestionario/{token}/{key}',function ($string, $key) {
