@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Redis;
 
 class CuestionarioController extends Controller
 {
@@ -25,14 +27,26 @@ class CuestionarioController extends Controller
                 'usuariows'=>'app',
                 'clavews'=>'fa0801',
             ];
+            $ses=$this->sesssion($params,$request);
+            if(isset($ses['message'])){
+                return response()->json(['message'=>$ses['message']],405);
+            }
+            return $ses;
+           
+        }catch(Exception $e){
+            return response()->json(['message'=>'Error al obtener datos'],405);
+        }
+        
+    }
+    public function sesssion($params, Request $request){
+        try{
             $response=$this->requestdata($params);
             $userdata=$response['obtener_pacientedni'][0];
         
             
             if($userdata['nombre']==null || $userdata['aten_numero']==null || $userdata['aten_establecimiento']==null){
-                return response()->json(['message'=>'No se encontraron datos del paciente'],405);
+                return array('message'=>'No se encontraron datos del paciente');
             }
-
             $credentials=[
                 "user"=>$userdata['nombre'],
                 "dni"=>$userdata['documento_identidad'],
@@ -50,9 +64,9 @@ class CuestionarioController extends Controller
             ///$request->session()->put(['dni'=>$request->dni]);
             return $request->session()->all();
         }catch(Exception $e){
-            return response()->json(['message'=>'Error al obtener datos'],405);
+            return array('message'=>'Error en el servido');
         }
-        
+
     }
 
     public function logout(Request $request){
@@ -61,5 +75,32 @@ class CuestionarioController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+
+    public function datos_link($token,Request $request){{
+        //algoritmo de desncriptado del token
+
+        //
+        $this->logout($request);
+        $dni=base64_decode($token);
+        $params=[
+            'dni'=>$dni,
+            'op'=>'obtener_pacientedni',
+            'usuariows'=>'app',
+            'clavews'=>'fa0801',
+        ];
+        $ses=$this->sesssion($params,$request);
+       
+        if(isset($ses['message'])){
+            return view('error',['message'=>$ses['message']]);
+            //throw new Exception('Error al obtener datos');
+        }
+        else{
+            return redirect('/inicio');
+        }
+        
+    }
+
     }
 }
