@@ -41,9 +41,16 @@ class CuestionarioController extends Controller
     public function sesssion($params, Request $request){
         try{
             $response=$this->requestdata($params);
-            $userdata=$response['obtener_pacientedni'][0];
-        
-            
+            $userdata=[];
+            if(isset($response['obtener_pacientedni'])){
+                $userdata=$response['obtener_pacientedni'][0];
+            }
+            if(isset($response['obtener_paciente_ae'])){
+                $userdata=$response['obtener_paciente_ae'][0];
+            }
+            if(count($userdata)==0){
+                array('message'=>'Error al encontrar datos del paciente');
+            }
             if($userdata['nombre']==null || $userdata['aten_numero']==null || $userdata['aten_establecimiento']==null){
                 return array('message'=>'No se encontraron datos del paciente');
             }
@@ -64,7 +71,8 @@ class CuestionarioController extends Controller
             ///$request->session()->put(['dni'=>$request->dni]);
             return $request->session()->all();
         }catch(Exception $e){
-            return array('message'=>'Error en el servido');
+            //return $e;
+            return array('message'=>'Error en el servidor');
         }
 
     }
@@ -77,30 +85,59 @@ class CuestionarioController extends Controller
         return redirect('/');
     }
 
+    public function decrypt($strg_e){
+          //algoritmo de desncriptado del token
+          $strg_r = '';
+          for ($i = 0; $i < strlen($strg_e); $i += 2) {
+              $strg = substr($strg_e, $i, 2);
 
-    public function datos_link($token,Request $request){{
-        //algoritmo de desncriptado del token
+              $strg_d = substr($strg, 0, 1);
+              $strg_b = substr($strg, 1, 1);
 
-        //
-        $this->logout($request);
-        $dni=base64_decode($token);
-        $params=[
-            'dni'=>$dni,
-            'op'=>'obtener_pacientedni',
-            'usuariows'=>'app',
-            'clavews'=>'fa0801',
-        ];
-        $ses=$this->sesssion($params,$request);
-       
-        if(isset($ses['message'])){
-            return view('error',['message'=>$ses['message']]);
-            //throw new Exception('Error al obtener datos');
-        }
-        else{
-            return redirect('/inicio');
-        }
-        
+              $strg_c = ord($strg_d);
+             // return $strg_b;
+              $strg_a =(int)$strg_c-18-(int)$strg_b;
+
+              $strg_a = chr($strg_a);
+
+              $strg_r = $strg_r . $strg_a;
+              // echo $i.'-';
+          }
+
+          return $strg_r;
     }
 
+    public function datos_link($strg_e ,Request $request){
+      
+         $arr=explode('_',$strg_e);
+         $ate='0';
+         $esta='0';
+         try{
+            if(count($arr)>1){
+                $ate=$this->decrypt($arr[0]);
+                $esta=$this->decrypt($arr[1]);
+            }
+            $this->logout($request);
+            // $dni=base64_decode($token);
+            $params=[
+                'atencion'=>"$ate",
+                'establecimiento'=>"$esta",
+                'op'=>'obtener_paciente_ae',
+                'usuariows'=>'app',
+                'clavews'=>'fa0801',
+            ];
+            $ses=$this->sesssion($params,$request);
+        
+            if(isset($ses['message'])){
+                return view('error',['message'=>$ses['message']]);
+                //throw new Exception('Error al obtener datos');
+            }
+            else{
+                return redirect('/inicio');
+            }
+        
+        }catch(Exception $e){
+            return view('error',['message'=>'Error al obtener datos']);
+        }
     }
 }
