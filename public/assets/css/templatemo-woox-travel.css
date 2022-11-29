@@ -1006,7 +1006,7 @@ Visit Country Style
 }
 
 .visit-country .item .right-content ul li:nth-child(2) {
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .visit-country .item .right-content ul li:last-child {
@@ -1209,6 +1209,16 @@ About Page Style
   position: relative;
   z-index: 2;
   margin-top: 30px;
+ 
+
+}
+@media (max-width:640px){
+  .main-button{
+    position: relative !important;
+  }
+  .main-button a{
+    padding: 7px !important;
+  }
 }
 
 .about-main-content .content .main-button a {
@@ -1671,8 +1681,8 @@ body #user-button:hover .u-icons, body #user-button:focus-within .u-icons {
 
 @media (prefers-color-scheme: dark) {
   body:not(.light) {
-    background: #232223;
-    color: white;
+    /*background: #232223;*/
+   /* color: white;*/
   }
 }
 body .credit {
@@ -1827,6 +1837,15 @@ body .options .option .label .info .sub {
   transition-delay: 0.1s;
 }
 
+.info li{
+  min-width: 250px !important;
+}
+@media(max-width:430px){
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .best-locations .main-button {
   margin-top: 60px;
 }
@@ -2094,6 +2113,9 @@ Reservation Page Style
   box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
   padding: 30px;
 }
+.more-info{
+  min-width: 340px;
+}
 
 .more-info .info-item i {
   background-color: #f0f0f0;
@@ -2337,9 +2359,16 @@ body {
   }
 }
 
+
 @media (max-width: 990px) {
   .visit-country{
     margin-top: 60px;
+  }
+}
+
+@media (max-width: 600px){
+  .visit-country{
+    margin-top: 85px !important;
   }
 }
 
@@ -2383,5 +2412,16 @@ div[role="progressbar"] {
 div[role="progressbar"]::before {
   counter-reset: percentage var(--value);
   content: counter(percentage) '%';
+}
+
+@media(max-width:500px) {
+  .right-content h4{
+    font-size: 17px !important;
+  }
+}
+@media(max-width:500px) {
+  .info-item h4{
+    font-size: 17px !important;
+  }
 }
 

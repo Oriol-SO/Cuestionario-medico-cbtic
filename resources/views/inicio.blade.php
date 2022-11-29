@@ -98,7 +98,7 @@
                 <div class="col-lg-12">
                   <div class="item">
                     <div class="row">
-                      <div class="col-lg-8 col-sm-7">
+                      <div class="col-lg-10 ">
                         <div class="right-content">
                           <h4>{{$cuest['nombre']}}</h4>
                             <div>
@@ -114,13 +114,12 @@
                             </div>
              
                           <ul class="info">
-                            <li><i class="fa fa-question"></i> preguntas: {{$cuest['preguntas']}}</li>
+                            <li><i class="fa fa-question"></i>preguntas:{{$cuest['preguntas']}}</li>
                             @if($cuest['tiempo']>0)
-                            <li><i class="fa fa-clock"></i> Tiempo: {{$cuest['tiempo']}} minutos</li>   
+                            <li><i class="fa fa-clock"></i>Tiempo:{{$cuest['tiempo']}} minutos</li>   
                             @else
-                            <li><i class="fa fa-clock"></i> Tiempo: Indefinido</li>
-                            <li> <div style="float: right">Estado</div> </li>
-                            <li>
+                            <li ><i class="fa fa-clock"></i>Tiempo: Indefinido</li>        
+                            <li style="padding-top: 10px">
                               <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="--value:{{$cuest['avance']}}"></div>
                             </li>
                             @endif
