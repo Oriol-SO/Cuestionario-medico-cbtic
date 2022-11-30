@@ -20,14 +20,15 @@ class TestController extends Controller
        //$this->middleware('auth');
        
        if(!$request->session()->has('user') ) {
-        Redirect::to('/')->send();
+        Redirect::to('/errorlink',)->send();
         throw new Exception('error al autenticar');
        }else{
         $this->user=$request->session()->get('user');
         $this->atencion=$request->session()->get('num_atencion');
         $this->establecimiento=$request->session()->get('num_establecimiento');
         if(!$request->session()->has('dni')){
-            Redirect::to('/')->send();
+            Redirect::to('/errorlink',)->send();
+            //return view('error',['message'=>'Inicia session otra vez a travez del link']);
             throw new Exception('error al autenticar');
         }else{
             $this->dni=$request->session()->get('dni');
@@ -161,7 +162,7 @@ class TestController extends Controller
         }
         
        // return $preguntas;
-        return view('test',['preguntas'=>$preguntas,'num_preg'=>$num_preguntas,'num_res'=>$num_respuestas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
+        return view('test',['datous'=>$request->session()->all(),'preguntas'=>$preguntas,'num_preg'=>$num_preguntas,'num_res'=>$num_respuestas,'desc'=>$descripcion,'test'=>$datos,'user'=>$this->user,'dni'=>$this->dni]);
         }catch(Exception $e){
             throw new Exception('ERROR');
         }

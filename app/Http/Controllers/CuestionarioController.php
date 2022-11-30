@@ -27,7 +27,7 @@ class CuestionarioController extends Controller
                 'usuariows'=>'app',
                 'clavews'=>'fa0801',
             ];
-            $ses=$this->sesssion($params,$request);
+            $ses=$this->sesssion($params,1,$request);
             if(isset($ses['message'])){
                 return response()->json(['message'=>$ses['message']],405);
             }
@@ -38,7 +38,7 @@ class CuestionarioController extends Controller
         }
         
     }
-    public function sesssion($params, Request $request){
+    public function sesssion($params,$tipo, Request $request){
         try{
             $response=$this->requestdata($params);
             $userdata=[];
@@ -66,6 +66,7 @@ class CuestionarioController extends Controller
                 'ocupacion'=>$userdata['ocupacion'],
                 'edad'=>$userdata['edad'],
                 'sexo'=>$userdata['sexo'],
+                'tipo'=>$tipo,
             ];
             $request->session()->put($credentials);
             ///$request->session()->put(['dni'=>$request->dni]);
@@ -82,7 +83,7 @@ class CuestionarioController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/iniciar/session/dni/credentials');
     }
 
     public function decrypt($strg_e){
@@ -126,7 +127,7 @@ class CuestionarioController extends Controller
                 'usuariows'=>'app',
                 'clavews'=>'fa0801',
             ];
-            $ses=$this->sesssion($params,$request);
+            $ses=$this->sesssion($params,2,$request);
         
             if(isset($ses['message'])){
                 return view('error',['message'=>$ses['message']]);

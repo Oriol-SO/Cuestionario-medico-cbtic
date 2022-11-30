@@ -29,6 +29,7 @@
                         <a href="{{url('/inicio')}}" class="logo">
                             <img src="{!! asset('assets/images/logo.png')!!}" alt="">
                         </a>
+                        @if($datous['tipo']==1)
                         <ul class="nav">
                             <li>
                               <a href="{{url('/')}}">Terminar sesión</a> 
@@ -37,6 +38,7 @@
                         <a class="menu-trigger">
                             <span>Menu</span>
                         </a>
+                        @endif
                     </nav>
                 </div>
             </div>

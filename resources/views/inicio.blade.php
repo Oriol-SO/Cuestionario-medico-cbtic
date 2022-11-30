@@ -30,6 +30,7 @@
                             <img src="{!! asset('assets/images/logo.png')!!}" alt="">
                     
                         </a>
+                        @if($user['tipo']==1)
                         <ul class="nav">
                             <li>
                                 <a href="{{route('logout')}}">Terminar session</a>
@@ -39,6 +40,7 @@
                         <a class="menu-trigger">
                             <span>Menu</span>
                         </a>
+                        @endif
                     </nav>
                 </div>
             </div>

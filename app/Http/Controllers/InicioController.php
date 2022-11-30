@@ -18,14 +18,14 @@ class InicioController extends Controller
     {
        //$this->middleware('auth');
        if(!$request->session()->has('user') ) {
-        Redirect::to('/')->send();
+        Redirect::to('/errorlink',)->send();
         throw new Exception('error al autenticar');
        }else{
         $this->user=$request->session()->get('user');
         $this->atencion=$request->session()->get('num_atencion');
         $this->establecimiento=$request->session()->get('num_establecimiento');
         if(!$request->session()->has('dni')){
-            Redirect::to('/')->send();
+            Redirect::to('/errorlink',)->send();
             throw new Exception('error al autenticar');
         }else{
             $this->dni=$request->session()->get('dni');

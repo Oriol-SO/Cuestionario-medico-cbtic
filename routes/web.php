@@ -16,10 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/iniciar/session/dni/credentials', function () {
     return view('welcome');
 })->name('login');
 
+Route::get('/errorlink',function(){
+    return view('error',['message'=>'Inicia sesión otra vez con tus credenciales o por el link de autentificación proporcionado']);
+});
+Route::get('/',function(){
+    return view('error',['message'=>'ESTA SECCIÓN ESTA RESTRINGIDA, INICIA SESIóN CON EL LINK DE AUTENTIFICACIÓN']);
+});
 
 
 Route::get('/inicio',[InicioController::class,'inicio'])->name('inicio');
