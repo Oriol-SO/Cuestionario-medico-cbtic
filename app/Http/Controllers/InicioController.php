@@ -42,13 +42,14 @@ class InicioController extends Controller
             'atencion'=>$this->atencion,
             'establecimiento'=>$this->establecimiento, 
         ];
-        
+        $cuestionario=[];
         $datos=$this->requestdata($params);
         $prueba= $datos['listar_examenpsicologico'][0];
         if($prueba['atencion']==null || $prueba['establecimiento']==null || $prueba['denominacion']==null){
-            throw new Exception('error al obtener los test');
+            //throw new Exception('error al obtener los test');
+            return view('inicio',['user'=>$request->session()->all(),'cuestionario'=>$cuestionario]);
         }
-        $cuestionario=[];
+        
 
         foreach($datos['listar_examenpsicologico'] as $cuest){
             $total=$cuest['total_preguntas'];

@@ -72,7 +72,7 @@ class CuestionarioController extends Controller
             return $request->session()->all();
         }catch(Exception $e){
             //return $e;
-            return array('message'=>'Error en el servidor');
+            return array('message'=>'Error en al obtener datos del paciente');
         }
 
     }
@@ -137,7 +137,7 @@ class CuestionarioController extends Controller
             }
         
         }catch(Exception $e){
-            return view('error',['message'=>'Error al obtener datos']);
+            return view('error',['message'=>'Error al obtener datos del paciente']);
         }
     }
 }

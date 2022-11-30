@@ -85,7 +85,11 @@
         <div class="row">
           <div class="col-lg-5">
             <div class="section-heading">
+              @if(count($cuestionario)>0)
               <h2>Lista de pruebas</h2>
+              @else
+              <h2>No tienes pruebas</h2>
+              @endif
               <p></p>
             </div>
           </div>
