@@ -32,7 +32,7 @@
                         @if($datous['tipo']==1)
                         <ul class="nav">
                             <li>
-                              <a href="{{url('/')}}">Terminar sesión</a> 
+                              <a href="{{route('logout')}}">Terminar sesión</a> 
                             </li> 
                         </ul>
                         <a class="menu-trigger">
